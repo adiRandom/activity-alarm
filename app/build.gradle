@@ -52,6 +52,16 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.5.0"
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
+    def room_version = "2.4.2"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "com.cronutils:cron-utils:9.1.7"
+
+    // Koin for Android
+    implementation "io.insert-koin:koin-core:3.2.0"
+    implementation "io.insert-koin:koin-android:3.2.0"
+
 
 
 }
