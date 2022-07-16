@@ -10,14 +10,19 @@ import kotlin.math.abs
 
 class JumpsCounterViewModel : ViewModel() {
 
+    // The expected values are:
+    // About -0.4 rotation  when hands down
+    // About .68 rotation when hands up
+    // About 21 acceleration when going up
+    // About -5 acceleration when going down
     companion object {
-        const val ACCELERATION_JUMP_UP_THRESHOLD = 20f
-        const val ACCELERATION_JUMP_DOWN_THRESHOLD = 10f
-        const val ROTATION_DIFFERENCE = 1.5f
+        const val ACCELERATION_JUMP_UP_THRESHOLD = 10f
+        const val ACCELERATION_JUMP_DOWN_THRESHOLD = 4f
+        const val ROTATION_DIFFERENCE = 0.8f
         const val ROTATION_BASELINE_EPSILON = 0.1f
         const val ACCELERATION_BASELINE_EPSILON = 0.1f
         private const val Z_LINEAR_ACCELERATION_BASELINE: Float = 0f
-        private const val Y_ROTATION_VECTOR_BASELINE = -0.6f
+        private const val Y_ROTATION_VECTOR_BASELINE = -0.35f
     }
 
     enum class Positions {
@@ -41,6 +46,9 @@ class JumpsCounterViewModel : ViewModel() {
     private val _userPosition = MutableStateFlow<Positions>(Positions.RESTING_HANDS_DOWN)
     val userPosition = _userPosition.asStateFlow()
 
+    val minRotation = MutableStateFlow(0f)
+    val maxRotation = MutableStateFlow(0f)
+
 
     fun onLinearAccelerationChange(sensorEvent: SensorEvent?) {
 
@@ -50,6 +58,8 @@ class JumpsCounterViewModel : ViewModel() {
             }
 
             val zAcceleration = sensorEvent.values[2]
+
+
 
             if (_userPosition.value == Positions.RESTING_HANDS_DOWN &&
                 zAcceleration - Z_LINEAR_ACCELERATION_BASELINE >= ACCELERATION_JUMP_UP_THRESHOLD
@@ -86,6 +96,12 @@ class JumpsCounterViewModel : ViewModel() {
 
             val yRotation = sensorEvent.values[1]
 
+            if(yRotation < minRotation.value){
+                minRotation.emit(yRotation)
+            }
+            if(yRotation > maxRotation.value){
+                maxRotation.emit(yRotation)
+            }
 
             if (_userPosition.value == Positions.DONE_JUMP_AWAITING_HANDS_UP &&
                 yRotation - Y_ROTATION_VECTOR_BASELINE >= ROTATION_DIFFERENCE
