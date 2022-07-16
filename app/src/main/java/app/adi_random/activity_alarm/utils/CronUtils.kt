@@ -10,15 +10,31 @@ object CronUtils {
     val cronDefinition =
         CronDefinitionBuilder
             .defineCron()
-            .withSeconds().and()
             .withMinutes().and()
             .withHours().and()
             .withDayOfWeek().and()
             .instance()
 
-    fun parseString(cron: String):Cron {
+    fun parseString(cron: String): Cron {
         return CronParser(cronDefinition).run {
             parse(cron)
         }
     }
+}
+
+
+fun Cron.getHour(): Int {
+    val tokens = asString().split(" ")
+    return tokens[1].toInt()
+}
+
+
+fun Cron.getMinute(): Int {
+    val tokens = asString().split(" ")
+    return tokens[0].toInt()
+}
+
+fun Cron.getRepeatingDays(): List<Int> {
+    val tokens = asString().split(" ")
+    return tokens[2].split(",").map(String::toInt)
 }

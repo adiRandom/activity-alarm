@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/alarm.xml" value="0.33229166666666665" />
         <entry key="app/src/main/res/layout/fragment_alarm_screen.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_jumps_counter.xml" value="0.24700699171760593" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.1078125" />

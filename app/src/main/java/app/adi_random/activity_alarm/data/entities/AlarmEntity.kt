@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "alarm")
 data class AlarmEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
     val cronExpression: String,
     val name: String?,
     val isEnabled: Boolean,
