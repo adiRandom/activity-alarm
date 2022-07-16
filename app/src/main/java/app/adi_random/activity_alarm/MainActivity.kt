@@ -2,6 +2,7 @@ package app.adi_random.activity_alarm
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import app.adi_random.activity_alarm.ui.alarm_screen.AlarmScreenFragment
 import app.adi_random.activity_alarm.ui.jump_counter.JumpsCounterFragment
 import app.adi_random.activity_alarm.ui.main.MainFragment
 
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, JumpsCounterFragment.newInstance())
+                .replace(R.id.container, AlarmScreenFragment.newInstance())
                 .commitNow()
         }
     }
