@@ -11,18 +11,18 @@ import kotlin.math.abs
 class JumpsCounterViewModel : ViewModel() {
 
     // The expected values are:
-    // About -0.4 rotation  when hands down
-    // About .68 rotation when hands up
+    // About -0.57 rotation  when hands down
+    // About .64 rotation when hands up
     // About 21 acceleration when going up
     // About -5 acceleration when going down
     companion object {
         const val ACCELERATION_JUMP_UP_THRESHOLD = 10f
         const val ACCELERATION_JUMP_DOWN_THRESHOLD = 4f
-        const val ROTATION_DIFFERENCE = 0.8f
+        const val ROTATION_DIFFERENCE = 1f
         const val ROTATION_BASELINE_EPSILON = 0.1f
         const val ACCELERATION_BASELINE_EPSILON = 0.1f
         private const val Z_LINEAR_ACCELERATION_BASELINE: Float = 0f
-        private const val Y_ROTATION_VECTOR_BASELINE = -0.35f
+        private const val X_ROTATION_VECTOR_BASELINE = -0.45f
     }
 
     enum class Positions {
@@ -94,21 +94,21 @@ class JumpsCounterViewModel : ViewModel() {
                 return@launch
             }
 
-            val yRotation = sensorEvent.values[1]
+            val xRotation = sensorEvent.values[0]
 
-            if(yRotation < minRotation.value){
-                minRotation.emit(yRotation)
+            if(xRotation < minRotation.value){
+                minRotation.emit(xRotation)
             }
-            if(yRotation > maxRotation.value){
-                maxRotation.emit(yRotation)
+            if(xRotation > maxRotation.value){
+                maxRotation.emit(xRotation)
             }
 
             if (_userPosition.value == Positions.DONE_JUMP_AWAITING_HANDS_UP &&
-                yRotation - Y_ROTATION_VECTOR_BASELINE >= ROTATION_DIFFERENCE
+                xRotation - X_ROTATION_VECTOR_BASELINE >= ROTATION_DIFFERENCE
             ) {
                 _userPosition.emit( Positions.RESTING_HANDS_UP)
             } else if (_userPosition.value == Positions.DONE_JUMPING_AWAITING_HANDS_DOWN &&
-                abs(yRotation - Y_ROTATION_VECTOR_BASELINE) <= ROTATION_BASELINE_EPSILON
+                abs(xRotation - X_ROTATION_VECTOR_BASELINE) <= ROTATION_BASELINE_EPSILON
             ) {
                 _userPosition.emit(Positions.COOLDOWN)
                 _jumps.run {

@@ -56,6 +56,11 @@ class JumpsCounterFragment : Fragment() {
         sensorManager.registerListener(object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent?) {
                 viewModel.onRotationVectorChange(event)
+
+//                if (event != null) {
+//                    binding.textView3.text =
+//                        "X:${event.values[0]} Y:${event.values[1]} Z:${event.values[2]}"
+//                }
             }
 
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
@@ -75,6 +80,7 @@ class JumpsCounterFragment : Fragment() {
                         binding.textView2.text = it.name
                     }
                 }
+
 
             }
 
