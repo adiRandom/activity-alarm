@@ -15,12 +15,13 @@ class JumpsCounterViewModel : ViewModel() {
     // About .64 rotation when hands up
     // About 21 acceleration when going up
     // About -5 acceleration when going down
+    // We used lower values for constants
     companion object {
-        const val ACCELERATION_JUMP_UP_THRESHOLD = 10f
+        const val ACCELERATION_JUMP_UP_THRESHOLD = 9f
         const val ACCELERATION_JUMP_DOWN_THRESHOLD = 4f
         const val ROTATION_DIFFERENCE = 1f
         const val ROTATION_BASELINE_EPSILON = 0.1f
-        const val ACCELERATION_BASELINE_EPSILON = 0.1f
+        const val ACCELERATION_BASELINE_EPSILON = 2f
         private const val Z_LINEAR_ACCELERATION_BASELINE: Float = 0f
         private const val X_ROTATION_VECTOR_BASELINE = -0.45f
     }
